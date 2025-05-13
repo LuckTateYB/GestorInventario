@@ -4,9 +4,11 @@ class InventarioController:
     def __init__(self):
         self.inventario_services = InventarioService()
     
-    def agregar_producto(self, nombre: str, descripcion: str, precio: float, stock: int):
+    def agregar_producto(self, nombre: str, modelo:str, submodelo:str, marca:str, proveedor:str, categoria:str,
+                         subcategoria:str, foto:bytes, manual:bytes, descripcion: str, precio: float, stock: int):
         try:
-            producto = self.inventario_services.agregar_producto(nombre, descripcion, precio, stock)
+            producto = self.inventario_services.agregar_producto(nombre, modelo, submodelo, marca, proveedor,
+                        categoria, subcategoria, foto, manual, descripcion, precio, stock)
             print(f"Producto agregado: {producto.nombre} con ID {producto.id_producto}")
             return producto
         except ValueError as e:

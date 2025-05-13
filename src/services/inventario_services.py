@@ -9,12 +9,16 @@ class InventarioService:
         self.producto_repo = producto_repo
         self.movimiento_repo = movimiento_repo
 
-    def agregar_producto(self, nombre: str, descripcion: str, precio: float, stock: int) -> Producto:
+    def agregar_producto(self, nombre: str, modelo:str, submodelo:str, marca:str, proveedor:str, categoria:str,
+                         subcategoria:str, foto:bytes, manual:bytes, descripcion: str, precio: float, stock: int) -> Producto:
         if stock < 0:
             raise ValueError("El stock no puede ser negativo")
         if precio < 0:
             raise ValueError("El precio no puede ser negativo")
-        producto = Producto(id_producto=None, nombre=nombre, descripcion=descripcion, precio=precio, stock=stock, disponibilidad=True)
+        producto = Producto(id_producto=None, nombre=nombre, modelo=modelo, submodelo=submodelo, 
+                            marca= marca, proveedor= proveedor, categoria= categoria, 
+                            subcategoria= subcategoria, foto= foto, manual= manual, descripcion=descripcion, 
+                            precio=precio, stock=stock, disponibilidad="disponible" if stock > 0 else "no disponible")
         return self.producto_repo.add(producto)
     
     def registrar_movimiento(self, id_producto: int, tipo:str, cantidad: int) -> Movimiento:

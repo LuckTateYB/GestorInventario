@@ -10,6 +10,14 @@ def create_table():
     CREATE TABLE IF NOT EXISTS productos (
     id_producto INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL,
+    modelo TEXT NOT NULL,
+    submodelo TEXT,
+    marca TEXT NOT NULL,
+    proveedor TEXT NOT NULL,
+    categoria TEXT NOT NULL,
+    subcategoria TEXT,
+    foto BLOB,
+    manual BLOB,
     descripcion TEXT NOT NULL,
     precio REAL NOT NULL CHECK(precio >= 0),
     activo INTEGER NOT NULL DEFAULT 1,
@@ -33,3 +41,5 @@ def create_table():
     conn.execute(sql_movimientos)
     conn.commit()
     conn.close()
+
+create_table()

@@ -10,10 +10,10 @@ class ProductoRepository:
             cursor = conn.cursor()
             cursor.execute(
                 """
-                INSERT INTO productos (nombre, descripcion, precio, stock)
-                VALUES (?, ?, ?, ?)
+                INSERT INTO productos (nombre, modelo, submodelo, marca, proveedor, categoria, subcategoria, foto, manual, descripcion, precio, stock)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
-                (producto.nombre, producto.descripcion, producto.precio, producto.stock)
+                (producto.nombre, producto.modelo, producto.submodelo, producto.marca, producto.proveedor, producto.categoria, producto.subcategoria, producto.foto, producto.manual,  producto.descripcion, producto.precio, producto.stock)
             )
             producto.id_producto = cursor.lastrowid
             conn.commit()
@@ -32,8 +32,16 @@ class ProductoRepository:
         conn.close()
         if row:
             return Producto(
-                id_producto=row["id"],
+                id_producto=row["id_producto"],
                 nombre=row["nombre"],
+                modelo=row["modelo"],
+                submodelo=row["submodelo"],
+                marca=row["marca"],
+                proveedor=row["proveedor"],
+                categoria=row["categoria"],
+                subcategoria=row["subcategoria"],
+                foto=row["foto"],
+                manual=row["manual"],
                 descripcion=row["descripcion"],
                 stock=row["stock"],
                 disponibilidad=row["disponibilidad"],
@@ -46,10 +54,12 @@ class ProductoRepository:
         conn.execute(
             """
             UPDATE productos
-            SET nombre = ?, descripcion = ?, cantidad = ?, precio = ?, disponibilidad = ?
+            SET nombre = ?, modelo = ?, submodelo = ?, marca = ?, proveedor = ?, categoria = ?, 
+            subcategoria = ?, foto = ?, descripcion = ?, cantidad = ?, precio = ?, disponibilidad = ?
             WHERE id_producto = ?
             """,
-            (producto.id_producto, producto.nombre, producto.descripcion, producto.stock, producto.precio, producto.disponibilidad)
+            (producto.id_producto, producto.nombre, producto.modelo, producto.submodelo, producto.marca, producto.proveedor, 
+             producto.categoria, producto.subcategoria, producto.foto, producto.descripcion, producto.stock, producto.precio, producto.disponibilidad)
         )
         conn.commit()
         conn.close()
@@ -75,6 +85,14 @@ class ProductoRepository:
         return [Producto(
             id_producto=row["id"],
             nombre=row["nombre"],
+            modelo=row["modelo"],
+            submodelo=row["submodelo"],
+            marca=row["marca"],
+            proveedor=row["proveedor"],
+            categoria=row["categoria"],
+            subcategoria=row["subcategoria"],
+            foto=row["foto"],
+            manual=row["manual"],
             descripcion=row["descripcion"],
             stock=row["stock"],
             disponibilidad=row["disponibilidad"],
@@ -90,6 +108,14 @@ class ProductoRepository:
         return [Producto(
             id_producto=row["id"],
             nombre=row["nombre"],
+            modelo=row["modelo"],
+            submodelo=row["submodelo"],
+            marca=row["marca"],
+            proveedor=row["proveedor"],
+            categoria=row["categoria"],
+            subcategoria=row["subcategoria"],
+            foto=row["foto"],
+            manual=row["manual"],
             descripcion=row["descripcion"],
             stock=row["cantidad"],
             disponibilidad=row["disponibilidad"],
